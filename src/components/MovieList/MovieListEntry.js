@@ -13,7 +13,9 @@ export default function MovieListEntry(props) {
       <div className="movie-list__entry card">
         <img src={posterPath} alt="" />
         <div className="card-section">
-          <h2 className="h4">{movie.title}</h2>
+          <h2 data-test-id="title-text" className="h4">
+            {movie.title}
+          </h2>
         </div>
       </div>
     </Link>

@@ -4,7 +4,7 @@ import MovieDetail from "./MovieDetail";
 import movieDetailData from "../../__fixtures__/star-wars.json";
 import { moviesSelectors, moviesActions } from "../../state/movies";
 
-class MovieDetailContainer extends PureComponent {
+export class MovieDetailContainer extends PureComponent {
   componentDidMount() {
     this.props.movieDetailDataReceived("181808", movieDetailData);
   }
