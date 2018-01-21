@@ -25,6 +25,15 @@ export default function moviesReducer(state, action) {
         displayList
       };
 
+    case actions.MOVIE_DETAIL_DATA_RECEIVED:
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          [payload.id]: payload.movie
+        }
+      };
+
     default:
       return initialState;
   }

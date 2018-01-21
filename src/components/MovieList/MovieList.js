@@ -1,5 +1,5 @@
-import React from 'react';
-import MovieListEntry from './MovieListEntry';
+import React from "react";
+import MovieListEntry from "./MovieListEntry";
 
 export default function MovieList(props) {
   const movies = props.movies.map(movie => (

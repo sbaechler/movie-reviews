@@ -72,12 +72,12 @@ and copy it into the styles folder.
 Remove the existing css files and create a new index.scss and \_app.scss file.
 Add the following to the index.scss file:
 
-@import './settings';
-@import 'foundation';
+    @import './settings';
+    @import 'foundation';
 
-@include foundation-everything;
+    @include foundation-everything;
 
-@import './app';
+    @import './app';
 
 Install the sass loader
 
@@ -187,7 +187,7 @@ argument and return a movie object.
 
 Create the `MovieDetail` component as FSC. Use a placeholder for the content for now.
 The component takes one property `movie`.
-Make sure the component can render itself if `props.movie` is not defined.
+Make sure the component can render itself if `props.movie` is not defined. In that case, show a 'Loading...' message.
 
 Create the `MovieDetailContainer` component. Connect it to the redux store. The `mapStateToProps` function uses the
 movie selector. Take the movie id from the router match params `id`. (The route is still to be defined).
@@ -200,7 +200,55 @@ Update the `App` component:
 Add the `BrowserRouter` and the two routes for `/` and `/movies/:id`. The root path
 maps to the `MovieListContainer`, the detail path maps to the `MovieDetailContainer`.
 
-Add a `Link` to the detail page to the `MovieListEntry` component.
+Add a link to the detail page to the `MovieListEntry` component. Use the `Link` component from `react-router-dom`.
 
 Finish the `MovieDetail` component. Add the title and some properties from the data.
 Do not forget the link back to the list view.
+
+## Testing with Jest
+
+### Setting up Test Environment
+
+Install Enzyme. It might be usefull to read this [Readme](create-react-app-readme.md#testing-components) section.
+
+    yarn add enzyme enzyme-adapter-react-16 enzyme-to-json react-test-renderer
+
+Create a setupTest.js File in the src/ folder.
+
+In this file configure an Adapter for enzyme.
+
+    import { configure } from 'enzyme';
+    import Adapter from 'enzyme-adapter-react-16';
+
+    configure({ adapter: new Adapter() });
+
+Now link the setup script to jest in your package.json
+
+    "jest": {
+      ...
+      "setupFiles": [
+        "<rootDir>/config/polyfills.js",
+        "<rootDir>/src/setupTest.js"
+      ],
+      ...
+    }
+
+### Start writing some tests
+
+Jest will match every file placed in a \_\_tests\_\_ folder or every File that ends with .spec.js or .test.js
+Since create-react-app comes with a App.test.js file we should already be able to run our tests.
+
+    yarn test
+
+Create a test file for each component we created so far then rerun the tests
+this time with the argument --coverage
+
+    yarn test --coverage
+
+This gives you an idea of how complete your tests are.
+
+Write tests to reach the most highest test coverage. Start by testing the Components first.
+
+Test your reducers, selectors and actions - Keep in mind that those are just pure functions.
+
+Advanced: Try to test a connected component.
