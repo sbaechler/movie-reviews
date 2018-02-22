@@ -1,16 +1,33 @@
 # React Course
 
-## Initial Setup
+## Hello World
 
-Eject Webpack
+Install create-react-app if you didn't already
 
-    npm run eject
+    yarn global add create-react-app
+    
+Create a new App-Project 
+
+    create-react-app movie-reviews
+    cd movie-reviews
+    yarn start
+    
+Now open the folder in your favourite IDE or editor and open App.js in the src/
+
+Change "App-title" to Hello World 
+
+Changes should immediately be visible in the browser. 
+
+Now eject Webpack
+
+    yarn run eject
+
+Notice the changes that took place after ejecting the app.
 
 Read the [Readme](create-react-app-readme.md) and follow the instructions up to 
 (not including) adding Bootstrap.
     
-Remove the call to `registerServiceWorker()` from [`src/index.js`](src/index.js).    
-    
+Remove the call to `registerServiceWorker()` from [`src/index.js`](src/index.js).
 
 ## First Component
 
