@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { POSTER_BASE_URL, POSTER_SIZES } from "../../config/constants";
+import { toJS } from "../toJS";
 
-export default function MovieDetail(props) {
+export function MovieDetailComponent(props) {
   if (!props.movie) {
     return <div>Loading...</div>;
   }
@@ -34,3 +35,5 @@ export default function MovieDetail(props) {
     </div>
   );
 }
+
+export default toJS(MovieDetailComponent);

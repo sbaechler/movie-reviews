@@ -1,7 +1,8 @@
 import React from "react";
-import MovieList from "./MovieList";
+import { List } from "immutable";
+import { shallow, mount } from "enzyme";
+import { MovieListComponent } from "./MovieList";
 import MovieListEntry from "./MovieListEntry";
-import { shallow } from "enzyme";
 import ConnectedMovieListContainer, {
   MovieListContainerComponent
 } from "./MovieListContainer";
@@ -10,13 +11,13 @@ import { mountWithProvider } from "../../utils/mountWithProvider";
 describe("MovieListContainerComponent", () => {
   it("contains MovieList and calls movieDataReceived", () => {
     const movieDataReceived = jest.fn();
-    const wrapper = shallow(
+    const wrapper = mount(
       <MovieListContainerComponent
         movieDataReceived={movieDataReceived}
-        movies={[]}
+        movies={List()}
       />
     );
-    expect(wrapper.contains(<MovieList movies={[]} />)).toEqual(true);
+    expect(wrapper.find(MovieListComponent).exists()).toBe(true);
     expect(movieDataReceived.mock.calls.length).toBe(1);
   });
 
@@ -34,16 +35,16 @@ describe("MovieListContainerComponent", () => {
 
 describe("MovieList", () => {
   it("renders without crashing", () => {
-    const wrapper = shallow(<MovieList movies={[]} />);
+    const wrapper = shallow(<MovieListComponent movies={[]} />);
     expect(wrapper).toHaveLength(1);
   });
 
   it("renders 0 items when movies are empty", () => {
-    const wrapper = shallow(<MovieList movies={[]} />);
+    const wrapper = shallow(<MovieListComponent movies={[]} />);
     expect(wrapper.find(".cell")).toHaveLength(0);
   });
 
-  it("renders 2 items when movies are empty", () => {
+  it("renders 2 items", () => {
     const movies = [
       {
         vote_count: 5269,
@@ -80,7 +81,7 @@ describe("MovieList", () => {
         release_date: "2017-12-13"
       }
     ];
-    const wrapper = shallow(<MovieList movies={movies} />);
+    const wrapper = shallow(<MovieListComponent movies={movies} />);
     expect(wrapper.find(MovieListEntry)).toHaveLength(2);
   });
 });

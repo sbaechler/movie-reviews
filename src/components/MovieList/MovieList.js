@@ -1,7 +1,8 @@
 import React from "react";
 import MovieListEntry from "./MovieListEntry";
+import { toJS } from "../toJS";
 
-export default function MovieList(props) {
+export function MovieListComponent(props) {
   const movies = props.movies.map(movie => (
     <div className="cell" key={movie.id}>
       <MovieListEntry movie={movie} />
@@ -19,3 +20,5 @@ export default function MovieList(props) {
     </div>
   );
 }
+
+export default toJS(MovieListComponent);

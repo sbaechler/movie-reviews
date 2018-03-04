@@ -242,8 +242,9 @@ Since create-react-app comes with a App.test.js file we should already be able t
 
     yarn test
 
-Create a test file for each component we created so far then rerun the tests
-this time with the argument --coverage
+Create a test file for each component we created so far. Create named exports of the component without
+the connect() wrapper to be able to test the component in isolation.
+Rerun the tests this time with the argument --coverage
 
     yarn test --coverage
 
@@ -254,3 +255,37 @@ Write tests to reach the highest test coverage. Start by testing the Components 
 Test your reducers, selectors and actions - Keep in mind that those are just pure functions.
 
 Advanced: Try to test a connected component.
+
+## Immutable.js
+
+Install Immutable.js, Redux-Immutable and the Jest matchers:
+
+    yarn add immutable redux-immutable jest-immutable-matchers
+
+Install the Immutable.js Object Formatter Chrome Extension and restart Dev-Tools.
+
+Create the `MovieInfo` Record in `state/movies/movie-models.js` and export it
+in `state/movies/index.js`. Check which properties you actually use in the view
+and just add those. Think of sane default properties.
+
+Replace the `combineReducers` method in the root-reducer.
+
+Refactor the user reducer so it is a `Immutable.Map`.
+
+Refactor the movies reducer to use Immutable.js objects.
+Use `fromJS` to convert the initialState into an Immutable.js structure.
+Keep in mind that Maps can have integer keys while Javascript objects cannot.
+
+Use the `MovieInfo` record here for the list and detail reducers. In the list view
+the record takes the list item. In the detail view it takes the 'info' property.
+
+Update the movies-selectors to use `getIn`.
+
+Create the `toJS` component. Use the code from the
+[Redux Docs](https://redux.js.org/recipes/#using-immutable.js-with-redux).
+
+Wrap the `MovieList` and `MovieDetail` components with the toJS HOC.
+
+Modify the tests to match against immutable objects where needed. (Only in the reducer and the connected components.)
+Use the[Custom Immutable Matchers](https://github.com/unindented/custom-immutable-matchers/tree/master/packages/jest-immutable-matchers)
+to match object equality or type.

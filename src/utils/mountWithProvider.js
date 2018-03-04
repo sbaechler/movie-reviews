@@ -6,11 +6,7 @@ import rootReducer from "../state/root-reducer";
 import { BrowserRouter } from "react-router-dom";
 
 export const mountWithProvider = (component, state) => {
-  const initialState = {
-    ...state
-  };
-
-  const store = createStore(rootReducer, initialState);
+  const store = createStore(rootReducer, state);
 
   return mount(
     <Provider store={store}>

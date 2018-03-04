@@ -1,18 +1,17 @@
 import React from "react";
+import { Map, List } from "immutable";
+import * as matchers from "jest-immutable-matchers";
 import * as actions from "./movies-actions";
-import movieReducer from "./movies-reducers";
+import movieReducer, { initialState } from "./movies-reducers";
+import MovieDetail from "../../components/MovieDetail/MovieDetail";
+import { MovieInfo } from "./movies-models";
 
 describe("Movies Reducers", () => {
-  let initialState;
   let movies;
 
   beforeEach(() => {
-    initialState = {
-      overviews: {},
-      displayList: [],
-      details: {},
-      activeMovie: undefined
-    };
+    jest.addMatchers(matchers);
+
     movies = [
       {
         id: 346364
@@ -25,31 +24,34 @@ describe("Movies Reducers", () => {
   });
 
   it("dispatches " + actions.MOVIE_DATA_RECEIVED, () => {
-    let action = {
+    const action = {
       type: actions.MOVIE_DATA_RECEIVED,
       payload: { movies: movies }
     };
-    let expected = {
-      ...initialState,
+    const expected = initialState.mergeDeep({
       displayList: [346364],
-      overviews: {
-        "346364": {
+      overviews: Map().set(
+        346364,
+        new MovieInfo({
           id: 346364
-        }
-      }
-    };
-    expect(movieReducer(initialState, action)).toEqual(expected);
+        })
+      )
+    });
+    expect(movieReducer(initialState, action)).toEqualImmutable(expected);
   });
 
   it("dispatches " + actions.MOVIE_DETAIL_DATA_RECEIVED, () => {
     let action = {
       type: actions.MOVIE_DETAIL_DATA_RECEIVED,
-      payload: { movie: {}, id: "1" }
+      payload: { movie: { info: { id: 1 }, reviews: [] }, id: 1 }
     };
-    let expected = {
-      ...initialState,
-      details: { "1": {} }
-    };
-    expect(movieReducer(initialState, action)).toEqual(expected);
+    let expected = initialState.setIn(
+      ["details", 1],
+      new Map({
+        info: new MovieInfo({ id: 1 }),
+        reviews: List()
+      })
+    );
+    expect(movieReducer(initialState, action)).toEqualImmutable(expected);
   });
 });

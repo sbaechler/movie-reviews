@@ -1,4 +1,4 @@
 export default {
-  user: state => state.user,
-  username: state => state.user.username
+  user: state => state.get("user"),
+  username: state => state.getIn(["user", "username"])
 };

@@ -1,5 +1,7 @@
 export default {
   movies: state =>
-    state.movies.displayList.map(id => state.movies.overviews[id]),
-  movie: (state, id) => state.movies.details[id]
+    state
+      .getIn(["movies", "displayList"])
+      .map(id => state.getIn(["movies", "overviews", id])),
+  movie: (state, id) => state.getIn(["movies", "details", id])
 };
