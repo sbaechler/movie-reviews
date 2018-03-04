@@ -4,6 +4,6 @@ import userReducer from "./user-reducers";
 describe("user-reducer", () => {
   const reducer = userReducer();
   it('expects username to be "Simon" at initialState', () => {
-    expect(reducer.username).toBe("Simon");
+    expect(reducer.get("username")).toBe("Simon");
   });
 });

@@ -2,8 +2,6 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import MovieDetail, { MovieDetailComponent } from "./MovieDetail";
 import { MovieDetailContainerComponent } from "./MovieDetailContainer";
-import { fromJS } from "immutable";
-import { MovieInfo } from "../../state/movies/movies-models";
 
 describe("MovieDetail Container", () => {
   it("contains MovieDetailComponent and runs movieDetailDataReceived", () => {
@@ -29,15 +27,15 @@ describe("MovieDetail Component", () => {
   let movie;
 
   beforeEach(() => {
-    movie = fromJS({
-      info: new MovieInfo({
+    movie = {
+      info: {
         title: "title",
         tagline: "tagline",
         overview: "overview",
         poster_path: "path",
-        genres: fromJS([{ name: "genre", id: 1 }])
-      })
-    });
+        genres: [{ name: "genre", id: 1 }]
+      }
+    };
   });
 
   it("lists 1 genres", () => {
