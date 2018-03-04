@@ -1,4 +1,4 @@
-import { Map, fromJS } from "immutable";
+import { fromJS } from "immutable";
 import * as matchers from "jest-immutable-matchers";
 import rootReducer from "./root-reducer";
 
@@ -8,7 +8,7 @@ describe("Root Reducer", () => {
   });
 
   it("reduces", () => {
-    let state = rootReducer();
+    const state = rootReducer();
 
     const expectedState = fromJS({
       user: { username: "Simon" },
