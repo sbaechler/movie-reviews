@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import MovieList from '../MovieList/MovieList';
-
-import mockData from '../../__fixtures__/movies.json';
-
-const movies = mockData.results;
+import React, { Component } from "react";
+import MovieListContainer from "../MovieList/MovieListContainer";
 
 class App extends Component {
   render() {
     return (
       <div className="grid-container">
-        <MovieList movies={movies} />
+        <MovieListContainer />
       </div>
     );
   }
