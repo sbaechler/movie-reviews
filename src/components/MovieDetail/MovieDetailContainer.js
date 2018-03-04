@@ -4,7 +4,7 @@ import MovieDetail from "./MovieDetail";
 import movieDetailData from "../../__fixtures__/star-wars.json";
 import { moviesSelectors, moviesActions } from "../../state/movies";
 
-export class MovieDetailContainer extends PureComponent {
+export class MovieDetailContainerComponent extends PureComponent {
   componentDidMount() {
     this.props.movieDetailDataReceived("181808", movieDetailData);
   }
@@ -22,4 +22,4 @@ const actions = {
   movieDetailDataReceived: moviesActions.movieDetailDataReceived
 };
 
-export default connect(mapStateToProps, actions)(MovieDetailContainer);
+export default connect(mapStateToProps, actions)(MovieDetailContainerComponent);

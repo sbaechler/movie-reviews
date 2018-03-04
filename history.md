@@ -233,6 +233,8 @@ Now link the setup script to jest in your package.json
       ...
     }
 
+Optionally, install the Jest plugin for your favorite IDE or editor.
+
 ### Start writing some tests
 
 Jest will match every file placed in a \_\_tests\_\_ folder or every File that ends with .spec.js or .test.js
@@ -247,7 +249,7 @@ this time with the argument --coverage
 
 This gives you an idea of how complete your tests are.
 
-Write tests to reach the most highest test coverage. Start by testing the Components first.
+Write tests to reach the highest test coverage. Start by testing the Components first.
 
 Test your reducers, selectors and actions - Keep in mind that those are just pure functions.
 

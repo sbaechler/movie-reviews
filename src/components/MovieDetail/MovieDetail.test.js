@@ -1,13 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
 import MovieDetail from "./MovieDetail";
-import { MovieDetailContainer } from "./MovieDetailContainer";
+import { MovieDetailContainerComponent } from "./MovieDetailContainer";
 
 describe("MovieDetailContainer", () => {
   it("contains MovieDetail and runs movieDetailDataReceived", () => {
     const movieDetailDataReceived = jest.fn();
     const wrapper = shallow(
-      <MovieDetailContainer
+      <MovieDetailContainerComponent
         movieDetailDataReceived={movieDetailDataReceived}
         movie={[]}
       />

@@ -3,23 +3,31 @@ import MovieList from "./MovieList";
 import MovieListEntry from "./MovieListEntry";
 import { shallow } from "enzyme";
 import ConnectedMovieListContainer, {
-  MovieListContainer
+  MovieListContainerComponent
 } from "./MovieListContainer";
 import { mountWithProvider } from "../../utils/mountWithProvider";
 
-describe("MovieListContainer", () => {
+describe("MovieListContainerComponent", () => {
   it("contains MovieList and calls movieDataReceived", () => {
     const movieDataReceived = jest.fn();
     const wrapper = shallow(
-      <MovieListContainer movieDataReceived={movieDataReceived} movies={[]} />
+      <MovieListContainerComponent
+        movieDataReceived={movieDataReceived}
+        movies={[]}
+      />
     );
     expect(wrapper.contains(<MovieList movies={[]} />)).toEqual(true);
     expect(movieDataReceived.mock.calls.length).toBe(1);
   });
 
   it("MovieList calls componentDidMount", () => {
-    const spy = jest.spyOn(MovieListContainer.prototype, "componentDidMount");
-    shallow(<MovieListContainer movieDataReceived={jest.fn()} movies={[]} />);
+    const spy = jest.spyOn(
+      MovieListContainerComponent.prototype,
+      "componentDidMount"
+    );
+    shallow(
+      <MovieListContainerComponent movieDataReceived={jest.fn()} movies={[]} />
+    );
     expect(spy).toHaveBeenCalled();
   });
 });
@@ -91,7 +99,7 @@ describe("MovieListEntry", () => {
   });
 });
 
-describe("MovieListContainer", () => {
+describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
     const wrapper = mountWithProvider(<ConnectedMovieListContainer />);
     expect(wrapper.find(MovieListEntry)).toHaveLength(20);
