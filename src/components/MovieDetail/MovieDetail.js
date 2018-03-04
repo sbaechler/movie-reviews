@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { POSTER_BASE_URL, POSTER_SIZES } from "../../config/constants";
 import { toJS } from "../toJS";
+import MovieReviews from "../MovieReviews/MovieReviews";
 
 export function MovieDetailComponent(props) {
   if (!props.movie) {
@@ -32,6 +33,7 @@ export function MovieDetailComponent(props) {
         <p>{genres}</p>
         <img src={posterPath} alt="" />
       </div>
+      <MovieReviews reviews={props.movie.reviews} movieId={movieInfo.id} />
     </div>
   );
 }

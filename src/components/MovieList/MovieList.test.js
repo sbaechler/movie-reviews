@@ -1,34 +1,32 @@
 import React from "react";
 import { List } from "immutable";
 import { shallow, mount } from "enzyme";
+import movieData from "../../__fixtures__/movies";
 import { MovieListComponent } from "./MovieList";
 import MovieListEntry from "./MovieListEntry";
+import { moviesActions } from "../../state/movies/index";
 import ConnectedMovieListContainer, {
   MovieListContainerComponent
 } from "./MovieListContainer";
 import { mountWithProvider } from "../../utils/mountWithProvider";
+import rootReducer from "../../state/root-reducer";
 
 describe("MovieListContainerComponent", () => {
   it("contains MovieList and calls movieDataReceived", () => {
-    const movieDataReceived = jest.fn();
+    const moviesRequested = jest.fn();
     const wrapper = mount(
       <MovieListContainerComponent
-        movieDataReceived={movieDataReceived}
+        moviesRequested={moviesRequested}
         movies={List()}
       />
     );
     expect(wrapper.find(MovieListComponent).exists()).toBe(true);
-    expect(movieDataReceived.mock.calls.length).toBe(1);
+    expect(moviesRequested.mock.calls.length).toBe(1);
   });
 
   it("MovieList calls componentDidMount", () => {
-    const spy = jest.spyOn(
-      MovieListContainerComponent.prototype,
-      "componentDidMount"
-    );
-    shallow(
-      <MovieListContainerComponent movieDataReceived={jest.fn()} movies={[]} />
-    );
+    const spy = jest.fn();
+    shallow(<MovieListContainerComponent moviesRequested={spy} movies={[]} />);
     expect(spy).toHaveBeenCalled();
   });
 });
@@ -102,7 +100,9 @@ describe("MovieListEntry", () => {
 
 describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
-    const wrapper = mountWithProvider(<ConnectedMovieListContainer />);
+    const action = moviesActions.movieDataReceived(movieData.results);
+    const state = rootReducer(undefined, action);
+    const wrapper = mountWithProvider(<ConnectedMovieListContainer />, state);
     expect(wrapper.find(MovieListEntry)).toHaveLength(20);
   });
 });

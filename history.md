@@ -289,3 +289,131 @@ Wrap the `MovieList` and `MovieDetail` components with the toJS HOC.
 Modify the tests to match against immutable objects where needed. (Only in the reducer and the connected components.)
 Use the[Custom Immutable Matchers](https://github.com/unindented/custom-immutable-matchers/tree/master/packages/jest-immutable-matchers)
 to match object equality or type.
+
+## Configure the Backend
+
+### With Proxy
+
+Add the `REACT_APP_BACKEND_URL="/api"` property to your .env.local file in the project root. If the File doesn't exist create it.
+
+Modify your package.json by adding
+
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:8080" // Or wherever your API is located
+      }
+    }
+
+This will forward calls to /api to http://localhost:8080/api
+
+Restart the dev server.
+
+### Without Proxy
+
+!!! Works only if you have your API installed on your local machine.
+
+To install the Backend on your Local get MongoDB
+https://www.mongodb.com/download-center?jmp=nav#community
+
+Clone the API Project from github
+
+    git clone git@github.com:gaquinozh/movie-app-api.git
+
+Follow the installation Steps on the Readme
+https://github.com/gaquinozh/movie-app-api/blob/master/README.md
+
+Add the `REACT_APP_BACKEND_URL="http://localhost:8080/api"` property to your .env.local file in the project root.
+
+Restart the dev server.
+
+## Redux-Saga
+
+### Excercise 1
+
+Install Redux-Saga and Axios
+
+    yarn add redux-saga axios
+
+Create the missing actions and action creators `MOVIES_REQUESTED`,
+`MOVIE_DETAILS_REQUESTED` and `MOVIE_LOAD_ERROR`.
+
+Add the constant `BACKEND_URL` to constants.js. Assign it the
+`BACKEND_URL` environment variable.
+
+Add the saga middleware and root saga as described in the
+[Redux Saga Tutorial](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)
+The root saga currently only starts one saga: The yet to be defined movies-saga.
+Add the sagaMiddleware to `state/index.js` or wherever you have placed the`createStore`call.
+Use [compose()](https://redux.js.org/api-reference/compose) in `createStore` to
+compose the middlewares (the saga middleware and the devtools extensions).
+
+Replace the `movieDataReceived` action in `MovieListContainer` with the
+`moviesRequested` action.
+
+Create the `loadMovies` saga. Inject `axios.get` so the saga is testable:
+Get the movies from the `${BACKEND_URL}/movies` endpoint and send out a `movieDataReceived`
+action with the result data.
+In case of an error send out the `movieLoadError` action with the error.
+
+Create the `moviesSaga` as default export. It listens to the `MOVIES_REQUESTED` action and
+triggers the `loadMovies` saga. Pass on the DI methods (get) here as well.
+
+Create the `loadMovieDetails` saga. This saga takes the get method and the action payload.
+It sends out a `movieDetailDataReceived` or a `movieLoadError` action.
+
+Trigger the `loadMovieDetails` action in the `MovieDetailContainer` component.
+
+Adjust the movies reducer to work with the new data structure that gets sent back from the API.
+
+Test the app. List and detail views should be working.
+
+### Excercise 2
+
+Create the `MovieReviews` component. Use the
+[Foundation helper classes](https://foundation.zurb.com/sites/docs/kitchen-sink.html) for easy formatting.
+
+Create the review actions for `SUBMIT_REVIEW_REQUESTED`, `SUBMIT_REVIEW_SUCCESS` and
+`SUBMIT_REVIEW_ERROR`. `submitReviewRequested` payload should have
+the fields `movieId`, `content`, `author` and `publication_date` so it matches the backend API.
+Add the field `placeholderId` as well for the optimistic UI update.
+
+Maybe create a new selector that returns just the username. You can use `getIn` to get
+the property. It does not fail if `user` is not defined yet.
+
+Create the `AddReview` connected component. Use a textarea as the input element. Keep in mind
+that in React the textarea behaves like an input field.
+[Docs](https://reactjs.org/docs/forms.html#the-textarea-tag)
+
+The component should have an `onSubmit` handler for the form and an `onChange` handler for
+the input element. The onSubmit handler fills in the `author` and the `publication_date` fields
+as well. The `placeholderId` should be a unique string (e.g. the current date).
+
+Connect the component to the state. Pass in the `username` prop and the `submitReviewRequested` action.
+The movieId should be passed in from the parent component.
+
+Check with the Redux-Devtools if the `SUBMIT_REVIEW_REQUESTED` action is sent out correctly.
+
+### Excercise 3
+
+Create the `submitMovieReview` saga. Inject axios.post.
+If you have not already done so in the component, extend the payload with
+the `publication_date` property that contains the current date as ISO string.
+
+Send the call to the backend and put a `submitReviewSuccess` action with the response data.
+
+In case of error, send out a `submitReviewError` action with the error and the original payload.
+
+Do not add the submitMovieReview saga to the `moviesSaga` yet. Test the reducer first.
+
+Create a reducer for the `SUBMIT_REVIEW_REQUESTED` that adds the review to the
+`details.<movieId>.reviews` state. Convert the payload to Immutable.
+
+Test the form. If you submit a review it should appear in the review list.
+
+Add the submitMovieReview saga to the `moviesSaga` and test it by submitting a new review.
+It should now stay even if you reload the page.
+
+Create the `SUBMIT_REVIEW_SUCCESS` reducer. You could replace the placeholder entry with the
+real entry that got sent back from the server, but don't have to.
+
+Create the `SUBMIT_REVIEW_ERROR` reducer. Remove the placeholder entry.

@@ -5,16 +5,17 @@ import { MovieDetailContainerComponent } from "./MovieDetailContainer";
 
 describe("MovieDetail Container", () => {
   it("contains MovieDetailComponent and runs movieDetailDataReceived", () => {
-    const movieDetailDataReceived = jest.fn();
+    const movieDetailsRequested = jest.fn();
     const wrapper = mount(
       <MovieDetailContainerComponent
-        movieDetailDataReceived={movieDetailDataReceived}
+        movieDetailsRequested={movieDetailsRequested}
+        match={{ params: { id: 1 } }}
         movie={undefined}
       />
     );
 
     expect(wrapper.find(MovieDetail).exists()).toEqual(true);
-    expect(movieDetailDataReceived.mock.calls.length).toBe(1);
+    expect(movieDetailsRequested.mock.calls.length).toBe(1);
   });
 
   it("shows loading when movie is not defined yet", () => {

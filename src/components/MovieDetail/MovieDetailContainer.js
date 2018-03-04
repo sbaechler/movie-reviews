@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import MovieDetail from "./MovieDetail";
-import movieDetailData from "../../__fixtures__/star-wars.json";
 import { moviesSelectors, moviesActions } from "../../state/movies";
 
 export class MovieDetailContainerComponent extends PureComponent {
   componentDidMount() {
-    this.props.movieDetailDataReceived("181808", movieDetailData);
+    this.props.movieDetailsRequested(this.props.match.params.id);
   }
 
   render() {
@@ -19,7 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const actions = {
-  movieDetailDataReceived: moviesActions.movieDetailDataReceived
+  movieDetailsRequested: moviesActions.movieDetailsRequested
 };
 
 export default connect(mapStateToProps, actions)(MovieDetailContainerComponent);

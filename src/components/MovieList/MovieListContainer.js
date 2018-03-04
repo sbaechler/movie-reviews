@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import movieData from "../../__fixtures__/movies.json";
 import MovieList from "./MovieList";
 import { moviesSelectors, moviesActions } from "../../state/movies";
 
 export class MovieListContainerComponent extends PureComponent {
   componentDidMount() {
-    this.props.movieDataReceived(movieData.results);
+    this.props.moviesRequested();
   }
 
   render() {
@@ -19,7 +18,7 @@ const mapStateToProps = state => ({
 });
 
 const actions = {
-  movieDataReceived: moviesActions.movieDataReceived
+  moviesRequested: moviesActions.moviesRequested
 };
 
 export default connect(mapStateToProps, actions)(MovieListContainerComponent);
