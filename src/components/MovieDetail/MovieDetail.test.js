@@ -1,24 +1,29 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
 import MovieDetail from "./MovieDetail";
 import { MovieDetailContainerComponent } from "./MovieDetailContainer";
 
-describe("MovieDetailContainer", () => {
-  it("contains MovieDetail and runs movieDetailDataReceived", () => {
+describe("MovieDetail Container", () => {
+  it("contains MovieDetailComponent and runs movieDetailDataReceived", () => {
     const movieDetailDataReceived = jest.fn();
-    const wrapper = shallow(
+    const wrapper = mount(
       <MovieDetailContainerComponent
         movieDetailDataReceived={movieDetailDataReceived}
-        movie={[]}
+        movie={undefined}
       />
     );
 
-    expect(wrapper.contains(<MovieDetail movie={[]} />)).toEqual(true);
+    expect(wrapper.find(MovieDetail).exists()).toEqual(true);
     expect(movieDetailDataReceived.mock.calls.length).toBe(1);
+  });
+
+  it("shows loading when movie is not defined yet", () => {
+    const wrapper = mount(<MovieDetail movie={undefined} />);
+    expect(wrapper.contains(<div>Loading...</div>)).toBeTruthy();
   });
 });
 
-describe("MovieDetail", () => {
+describe("MovieDetail Component", () => {
   let movie;
 
   beforeEach(() => {
@@ -31,12 +36,6 @@ describe("MovieDetail", () => {
         genres: [{ name: "genre", id: 1 }]
       }
     };
-  });
-
-  it("shows loading when movie is not defined yet", () => {
-    movie = undefined;
-    const wrapper = shallow(<MovieDetail movie={movie} />);
-    expect(wrapper.matchesElement(<div>Loading...</div>)).toBeTruthy();
   });
 
   it("lists 1 genres", () => {

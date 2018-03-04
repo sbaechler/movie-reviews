@@ -43,7 +43,7 @@ describe("MovieList", () => {
     expect(wrapper.find(".cell")).toHaveLength(0);
   });
 
-  it("renders 2 items when movies are empty", () => {
+  it("renders 2 items", () => {
     const movies = [
       {
         vote_count: 5269,
