@@ -67,12 +67,13 @@ Install Foundation
     yarn add foundation-sites
 
 Download the foundation settings file from
-[Zurb](https://foundation.zurb.com/sites/docs/sass.html#compiling-manually).
+[Zurb](https://foundation.zurb.com/sites/docs/sass.html#compiling-manually)
+and copy it into the styles folder.
 
 Remove the existing css files and create a new index.scss and \_app.scss file.
 Add the following to the index.scss file:
 
-@import './settings'; // ToDo @Simon where is this file from?
+@import './settings';
 @import 'foundation';
 
 @include foundation-everything;
