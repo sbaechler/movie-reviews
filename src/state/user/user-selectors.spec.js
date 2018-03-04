@@ -5,10 +5,12 @@ describe("User Selectors", () => {
   let initialState;
   beforeEach(() => {
     initialState = {
-      user: "Simon"
+      user: {
+        username: "Simon"
+      }
     };
   });
   it('expects user to be "Simon"', () => {
-    expect(userSelector.user(initialState)).toEqual("Simon");
+    expect(userSelector.username(initialState)).toEqual("Simon");
   });
 });

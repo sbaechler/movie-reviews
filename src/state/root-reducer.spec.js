@@ -5,7 +5,7 @@ describe("Root Reducer", () => {
     let state;
     state = rootReducer(
       {
-        users: { username: "Simon" },
+        user: { username: "Simon" },
         movies: { overviews: {}, displayList: [] }
       },
       {
@@ -34,7 +34,7 @@ describe("Root Reducer", () => {
       }
     );
     expect(state).toEqual({
-      users: { username: "Simon" },
+      user: { username: "Simon" },
       movies: {
         overviews: {
           "346364": {

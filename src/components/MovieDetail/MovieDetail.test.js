@@ -28,7 +28,7 @@ describe("MovieDetail", () => {
         tagline: "tagline",
         overview: "overview",
         poster_path: "path",
-        genres: [{ name: "genre" }]
+        genres: [{ name: "genre", id: 1 }]
       }
     };
   });
@@ -45,20 +45,12 @@ describe("MovieDetail", () => {
   });
 
   it("lists 2 genres", () => {
-    movie.info.genres.push({ name: "genre2" });
+    movie.info.genres.push({ name: "genre2", id: 2 });
     const wrapper = shallow(<MovieDetail movie={movie} />);
     expect(wrapper.find(".genre .label")).toHaveLength(2);
   });
 
-  it("renders the passed tagline", () => {
-    movie.info.genres.push({ name: "genre2" });
-    const wrapper = shallow(<MovieDetail movie={movie} />);
-    expect(wrapper.find(".genre .label")).toHaveLength(2);
-  });
+  it("renders the passed tagline");
 
-  it("renders image correctly", () => {
-    movie.info.genres.push({ name: "genre2" });
-    const wrapper = shallow(<MovieDetail movie={movie} />);
-    expect(wrapper.find(".genre .label")).toHaveLength(2);
-  });
+  it("renders image correctly");
 });
