@@ -11,7 +11,7 @@ export default function moviesReducer(state = initialState, action = {}) {
   const payload = action.payload;
 
   switch (action.type) {
-    case actions.MOVIE_DATA_RECEIVED:
+    case actions.MOVIE_DATA_RECEIVED: {
       const overviews = payload.movies.reduce((acc, movie) => {
         acc[movie.id] = movie;
         return acc;
@@ -24,7 +24,7 @@ export default function moviesReducer(state = initialState, action = {}) {
         overviews,
         displayList
       };
-
+    }
     case actions.MOVIE_DETAIL_DATA_RECEIVED:
       return {
         ...state,
