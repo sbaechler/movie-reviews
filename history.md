@@ -73,12 +73,12 @@ and copy it into the styles folder.
 Remove the existing css files and create a new index.scss and \_app.scss file.
 Add the following to the index.scss file:
 
-@import './settings';
-@import 'foundation';
-
-@include foundation-everything;
-
-@import './app';
+    @import './settings';
+    @import 'foundation';
+    
+    @include foundation-everything;
+    
+    @import './app';
 
 Install the sass loader
 
