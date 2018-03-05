@@ -1,10 +1,10 @@
 import React from "react";
-import MovieListEntry from "./MovieListEntry";
+import MovieListItem from "./MovieListItem";
 
 export function renderMovies(movies) {
   return movies.map(movie => (
     <div className="cell" key={movie.id}>
-      <MovieListEntry movie={movie} />
+      <MovieListItem movie={movie} />
     </div>
   ));
 }
