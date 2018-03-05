@@ -2,7 +2,7 @@ import React from "react";
 import MovieList from "./MovieList";
 import MovieListEntry from "./MovieListEntry";
 import { shallow } from "enzyme";
-import ConnectedMovieListContainer, {
+import MovieListContainer, {
   MovieListContainerComponent
 } from "./MovieListContainer";
 import { mountWithProvider } from "../../utils/mountWithProvider";
@@ -18,17 +18,6 @@ describe("MovieListContainerComponent", () => {
     );
     expect(wrapper.contains(<MovieList movies={[]} />)).toEqual(true);
     expect(movieDataReceived.mock.calls.length).toBe(1);
-  });
-
-  it("MovieList calls componentDidMount", () => {
-    const spy = jest.spyOn(
-      MovieListContainerComponent.prototype,
-      "componentDidMount"
-    );
-    shallow(
-      <MovieListContainerComponent movieDataReceived={jest.fn()} movies={[]} />
-    );
-    expect(spy).toHaveBeenCalled();
   });
 });
 
@@ -101,7 +90,7 @@ describe("MovieListEntry", () => {
 
 describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
-    const wrapper = mountWithProvider(<ConnectedMovieListContainer />);
+    const wrapper = mountWithProvider(<MovieListContainer />, {});
     expect(wrapper.find(MovieListEntry)).toHaveLength(20);
   });
 });

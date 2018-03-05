@@ -1,4 +1,3 @@
-import React from "react";
 import * as actions from "./movies-actions";
 import movieReducer from "./movies-reducers";
 
@@ -21,15 +20,15 @@ describe("Movies Reducers", () => {
   });
 
   it("has initialState set", () => {
-    expect(movieReducer({}, {})).toEqual(initialState);
+    expect(movieReducer()).toEqual(initialState);
   });
 
   it("dispatches " + actions.MOVIE_DATA_RECEIVED, () => {
-    let action = {
+    const action = {
       type: actions.MOVIE_DATA_RECEIVED,
       payload: { movies: movies }
     };
-    let expected = {
+    const expected = {
       ...initialState,
       displayList: [346364],
       overviews: {
@@ -42,13 +41,13 @@ describe("Movies Reducers", () => {
   });
 
   it("dispatches " + actions.MOVIE_DETAIL_DATA_RECEIVED, () => {
-    let action = {
+    const action = {
       type: actions.MOVIE_DETAIL_DATA_RECEIVED,
-      payload: { movie: {}, id: "1" }
+      payload: { movie: "foo", id: "1" }
     };
-    let expected = {
+    const expected = {
       ...initialState,
-      details: { "1": {} }
+      details: { "1": "foo" }
     };
     expect(movieReducer(initialState, action)).toEqual(expected);
   });

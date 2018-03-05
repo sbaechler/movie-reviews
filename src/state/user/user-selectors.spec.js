@@ -1,4 +1,3 @@
-import React from "react";
 import userSelector from "./user-selectors";
 
 describe("User Selectors", () => {

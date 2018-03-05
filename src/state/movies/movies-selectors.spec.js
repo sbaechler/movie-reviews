@@ -1,4 +1,3 @@
-import React from "react";
 import selectors from "./movies-selectors";
 
 describe("Movie Selectors", () => {
