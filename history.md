@@ -117,6 +117,28 @@ movie grid. The item needs the class `cell`.
 
 ### 1.1 Add the Redux state
 
+#### Task
+
+* Add a redux state
+* Fill the redux state using an action.
+
+Use this structure for the `movies` state:
+
+    user: object
+      username: string
+    movies: object
+      overviews: object<id, movie>
+      displayList: Array<id>
+      activeMovie: <Movie>
+
+
+* The initial user state already contains a `username` property with your name.
+* The initial movies state is empty. It will be filled with the `MOVIE_DATA_RECEIVED` action.
+* The action is triggered in the `componentDidMount` lifecycle method of the `MovieList` component.
+  The payload is the imported fixture.
+
+#### Steps
+
 Install redux
 
 yarn add redux react-redux
@@ -125,20 +147,20 @@ Create the root reducer - a combination of the usersReducer and the movieReducer
 
 Create the user reducer with its initial state where the username is already filled in.
 
-Create the `user` selector that exports the full user state.
+Create the `username` selector that exports the username property from the user state.
 
 Export the reducer and the selector in index.js.
 
 Create the movies reducer with an initial state that looks like this:
 
     const initialState = {
-      overviews: {},
-      displayList: [],
-      details: {},
-      activeMovie: undefined
+      overviews: {},  // store the list response data as id:value
+      displayList: [],  // store the IDs from the response
+      details: {},  // used for the detail views
+      activeMovie: undefined  // currently shown detail view
     };
 
-Create the movies selector that exports a list of movies in the order of displayList.
+Create the movies selector that returns a list of movies ordered by the ids in displayList.
 
 Add the imports to the root-reducer.
 
@@ -170,8 +192,19 @@ Check the Redux inspector and the React inspector if everyting is working correc
 
 ### 1.2 Add the Detail View and the Router
 
+#### Tasks
+
+* Add React Router
+* Create a detail page for a movie.
+
+* The detail data is provided by the `MOVIE_DETAIL_DATA_RECEIVED` action that takes an id and returns the movie data.
+* The action is called by the `componentDidMount` method of the `MovieDetail` component.
+* Use the id from the URL parameter.
+
+#### Steps
+
 Add the detail data (JSON file) to the `__fixtures__` folder. For this excercise we only provide details for one movie.
-Remember the ID of that movie.
+Remember the ID of that movie. Chose one from [here](https://github.com/sbaechler/movie-mock-data/tree/master/data/movies).
 
 If you haven't yet, install `react-router-dom`.
 

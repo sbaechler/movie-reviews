@@ -7,7 +7,7 @@ const initialState = {
   activeMovie: undefined
 };
 
-export default function moviesReducer(state, action) {
+export default function moviesReducer(state = initialState, action = {}) {
   const payload = action.payload;
 
   switch (action.type) {
@@ -35,6 +35,6 @@ export default function moviesReducer(state, action) {
       };
 
     default:
-      return initialState;
+      return state;
   }
 }
