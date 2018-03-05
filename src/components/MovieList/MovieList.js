@@ -1,12 +1,16 @@
 import React from 'react';
 import MovieListItem from './MovieListItem';
 
-export default function MovieList(props) {
-  const movies = props.movies.map(movie => (
+export function renderMovies(movies) {
+  return movies.map(movie => (
     <div className="cell" key={movie.id}>
       <MovieListItem movie={movie} />
     </div>
   ));
+}
+
+export default function MovieList(props) {
+  const movies = renderMovies(props.movies);
 
   return (
     <div>

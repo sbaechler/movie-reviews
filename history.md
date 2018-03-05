@@ -55,22 +55,59 @@ Read the [Readme](create-react-app-readme.md) and follow the instructions up to
 
 ## First Component
 
-Create the MovieList component.
+#### Task
+Display a list of movies in a grid. It should look like this:
+
+![Movie List Mockup](./public/list-view.svg)
+
+#### Steps
 
 Download the `movies/GET.json` mock data from [Github](https://github.com/sbaechler/movie-mock-data/blob/master/data/movies/GET.json)
-and copy it into the `__fixtures__` folder.
+and copy it into the `__fixtures__` folder. Rename it to movies.json.
 
-Create the MovieListItem component.
+For today's excercises we import the required data directly from the JSON file. Have a look
+at the JSON file, it represents the response from the API server that we are going to use on
+day 2.
+
+The server data contains a list of movies. Each movie has a poster image. The URL however is
+not complete. It contains a common prefix that we have to define in the constants.
+
+Create the file `config/constants.js` with the following content:
+
+    export const POSTER_BASE_URL='https://image.tmdb.org/t/p/';
+    
+    export const POSTER_SIZES = {
+      92: 'w92',
+      342: 'w342',
+      500: 'w500',
+      780: '780',
+      'original': 'original',
+    };
+    
+Import the data in App.js like this:
+
+    import mockData from '../../__fixtures__/movies.json';
+    
+    const movies = mockData.results;
+        
+Create the `MovieList` component. It should render a list of `MovieListItems` in a grid.
+
+Create the `MovieListItem` component. It should take a single prop `movie` and display it.
+The URL for the image src attribute can be build with the following template string:
+
+    `${POSTER_BASE_URL}/${POSTER_SIZES["342"]}/${movie.poster_path}`;
+
+For the protype styling we use the [Foundation](https://foundation.zurb.com/sites/) framework.
 
 Install Foundation
 
     yarn add foundation-sites
 
-Download the foundation settings file from
+Download the foundation settings file from this page. Click on 'Download Settings File'.
 [Zurb](https://foundation.zurb.com/sites/docs/sass.html#compiling-manually)
-and copy it into the styles folder.
+Copy the file into the styles folder.
 
-Remove the existing css files and create a new index.scss and \_app.scss file.
+Remove the existing css files and create a new `index.scss` and `_app.scss` file.
 Add the following to the index.scss file:
 
     @import './settings';
@@ -84,7 +121,7 @@ Install the sass loader
 
     yarn add sass-loader node-sass
 
-Open the webpack.config.dev and remove the configuration for pcss.
+Open webpack.config.dev (in the config folder) and remove the configuration section for pcss.
 Update it with the following configuration:
 
     {
@@ -117,6 +154,28 @@ movie grid. The item needs the class `cell`.
 ## Excercise 1
 
 ### 1.1 Add the Redux state
+
+#### Task
+
+* Add a redux state
+* Fill the redux state using an action.
+
+Use this structure for the `movies` state:
+
+    user: object
+      username: string
+    movies: object
+      overviews: object<id, movie>
+      displayList: Array<id>
+      activeMovie: <Movie>
+
+
+* The initial user state already contains a `username` property with your name.
+* The initial movies state is empty. It will be filled with the `MOVIE_DATA_RECEIVED` action.
+* The action is triggered in the `componentDidMount` lifecycle method of the `MovieList` component.
+  The payload is the imported fixture.
+
+#### Steps
 
 Install redux
 
