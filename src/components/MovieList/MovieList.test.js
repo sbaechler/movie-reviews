@@ -75,7 +75,7 @@ describe("MovieList", () => {
   });
 });
 
-describe("MovieListEntry", () => {
+describe("MovieListItem", () => {
   it("renders the title correctly", () => {
     const movieTitle = "Test Movie";
     const movie = {
