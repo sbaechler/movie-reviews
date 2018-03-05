@@ -1,6 +1,6 @@
 import React from "react";
 import MovieList from "./MovieList";
-import MovieListEntry from "./MovieListEntry";
+import MovieListItem from "./MovieListItem";
 import { shallow } from "enzyme";
 import MovieListContainer, {
   MovieListContainerComponent
@@ -70,18 +70,18 @@ describe("MovieList", () => {
       }
     ];
     const wrapper = shallow(<MovieList movies={movies} />);
-    expect(wrapper.find(MovieListEntry)).toHaveLength(2);
+    expect(wrapper.find(MovieListItem)).toHaveLength(2);
   });
 });
 
-describe("MovieListEntry", () => {
+describe("MovieListItem", () => {
   it("renders the title correctly", () => {
     const movieTitle = "Test Movie";
     const movie = {
       title: movieTitle,
       poster_path: ""
     };
-    const wrapper = shallow(<MovieListEntry movie={movie} />);
+    const wrapper = shallow(<MovieListItem movie={movie} />);
     expect(wrapper.find('[data-test-id="title-text"]').text()).toEqual(
       movieTitle
     );
@@ -91,6 +91,6 @@ describe("MovieListEntry", () => {
 describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
     const wrapper = mountWithProvider(<MovieListContainer />, {});
-    expect(wrapper.find(MovieListEntry)).toHaveLength(20);
+    expect(wrapper.find(MovieListItem)).toHaveLength(20);
   });
 });
