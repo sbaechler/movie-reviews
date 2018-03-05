@@ -1,6 +1,6 @@
 import React from "react";
 
-describe("Movie Saga", () => {
+describe("User Saga", () => {
   it("just passes", () => {
     expect(true).toBeTruthy();
   });

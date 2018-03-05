@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
-import MovieList from '../MovieList/MovieList';
-
-import mockData from '../../__fixtures__/movies.json';
-
-const movies = mockData.results;
+import React, { Component } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import MovieListContainer from "../MovieList/MovieListContainer";
+import MovieDetailContainer from "../MovieDetail/MovieDetailContainer";
 
 class App extends Component {
   render() {
     return (
       <div className="grid-container">
-        <MovieList movies={movies} />
+        <BrowserRouter>
+          <div>
+            <Route path="/movies/:id" component={MovieDetailContainer} />
+            <Route exact path="/" component={MovieListContainer} />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
