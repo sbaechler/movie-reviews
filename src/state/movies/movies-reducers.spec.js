@@ -1,9 +1,7 @@
-import React from "react";
 import { Map, List } from "immutable";
 import * as matchers from "jest-immutable-matchers";
 import * as actions from "./movies-actions";
 import movieReducer, { initialState } from "./movies-reducers";
-import MovieDetail from "../../components/MovieDetail/MovieDetail";
 import { MovieInfo } from "./movies-models";
 
 describe("Movies Reducers", () => {
@@ -20,7 +18,7 @@ describe("Movies Reducers", () => {
   });
 
   it("has initialState set", () => {
-    expect(movieReducer({}, {})).toEqual(initialState);
+    expect(movieReducer()).toEqual(initialState);
   });
 
   it("dispatches " + actions.MOVIE_DATA_RECEIVED, () => {
@@ -41,11 +39,11 @@ describe("Movies Reducers", () => {
   });
 
   it("dispatches " + actions.MOVIE_DETAIL_DATA_RECEIVED, () => {
-    let action = {
+    const action = {
       type: actions.MOVIE_DETAIL_DATA_RECEIVED,
       payload: { movie: { info: { id: 1 }, reviews: [] }, id: 1 }
     };
-    let expected = initialState.setIn(
+    const expected = initialState.setIn(
       ["details", 1],
       new Map({
         info: new MovieInfo({ id: 1 }),

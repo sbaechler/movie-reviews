@@ -1,13 +1,17 @@
 import React from "react";
-import MovieListEntry from "./MovieListEntry";
+import MovieListItem from "./MovieListItem";
 import { toJS } from "../toJS";
 
-export function MovieListComponent(props) {
-  const movies = props.movies.map(movie => (
+export function renderMovies(movies) {
+  return movies.map(movie => (
     <div className="cell" key={movie.id}>
-      <MovieListEntry movie={movie} />
+      <MovieListItem movie={movie} />
     </div>
   ));
+}
+
+export function MovieListComponent(props) {
+  const movies = renderMovies(props.movies);
 
   return (
     <div>

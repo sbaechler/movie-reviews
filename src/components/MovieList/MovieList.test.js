@@ -1,9 +1,9 @@
 import React from "react";
 import { List } from "immutable";
 import { shallow, mount } from "enzyme";
-import { MovieListComponent } from "./MovieList";
-import MovieListEntry from "./MovieListEntry";
-import ConnectedMovieListContainer, {
+import MovieList, { MovieListComponent } from "./MovieList";
+import MovieListItem from "./MovieListItem";
+import MovieListContainer, {
   MovieListContainerComponent
 } from "./MovieListContainer";
 import { mountWithProvider } from "../../utils/mountWithProvider";
@@ -19,17 +19,6 @@ describe("MovieListContainerComponent", () => {
     );
     expect(wrapper.find(MovieListComponent).exists()).toBe(true);
     expect(movieDataReceived.mock.calls.length).toBe(1);
-  });
-
-  it("MovieList calls componentDidMount", () => {
-    const spy = jest.spyOn(
-      MovieListContainerComponent.prototype,
-      "componentDidMount"
-    );
-    shallow(
-      <MovieListContainerComponent movieDataReceived={jest.fn()} movies={[]} />
-    );
-    expect(spy).toHaveBeenCalled();
   });
 });
 
@@ -82,7 +71,7 @@ describe("MovieList", () => {
       }
     ];
     const wrapper = shallow(<MovieListComponent movies={movies} />);
-    expect(wrapper.find(MovieListEntry)).toHaveLength(2);
+    expect(wrapper.find(MovieListItem)).toHaveLength(2);
   });
 });
 
@@ -93,7 +82,7 @@ describe("MovieListEntry", () => {
       title: movieTitle,
       poster_path: ""
     };
-    const wrapper = shallow(<MovieListEntry movie={movie} />);
+    const wrapper = shallow(<MovieListItem movie={movie} />);
     expect(wrapper.find('[data-test-id="title-text"]').text()).toEqual(
       movieTitle
     );
@@ -102,7 +91,7 @@ describe("MovieListEntry", () => {
 
 describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
-    const wrapper = mountWithProvider(<ConnectedMovieListContainer />);
-    expect(wrapper.find(MovieListEntry)).toHaveLength(20);
+    const wrapper = mountWithProvider(<MovieListContainer />);
+    expect(wrapper.find(MovieListItem)).toHaveLength(20);
   });
 });
