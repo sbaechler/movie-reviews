@@ -410,6 +410,18 @@ Restart the dev server.
 
 ### Excercise 1
 
+#### Tasks
+
+* Create a Saga to fetch the movie data:
+
+  * Sagas react to the `MOVIES REQUESTED` and `MOVIE DETAILS REQUESTED` actions.
+  * Once the data is loaded, the `MOVIES RECEIVED` and `MOVIE DETAILS RECIEVED` actions are published.
+  * In case of error, the `MOVIE LOAD ERROR` action is triggered.
+  * The reducer reacts to the `RECEIVED` actions and updates the state. (Should already mostly be done).
+  * The base URL for the endpoint is taken from the environment variables.
+
+#### Steps
+
 Install Redux-Saga and Axios
 
     yarn add redux-saga axios
@@ -449,6 +461,16 @@ Test the app. List and detail views should be working.
 
 ### Excercise 2
 
+#### Tasks
+
+* Create a `MovieReviews` component that looks like the one in the image below.
+* The component shows a list of reviews and contains an input field where the user can submit his own reviews.
+* The `SUBMIT REVIEW REQUESTED` is sent with the review text, the movie id and the username.
+
+![Reviews Screen](./public/rewiews-view.svg)
+
+#### Steps
+
 Create the `MovieReviews` component. Use the
 [Foundation helper classes](https://foundation.zurb.com/sites/docs/kitchen-sink.html) for easy formatting.
 
@@ -474,6 +496,17 @@ The movieId should be passed in from the parent component.
 Check with the Redux-Devtools if the `SUBMIT_REVIEW_REQUESTED` action is sent out correctly.
 
 ### Excercise 3
+
+#### Tasks
+
+* Create the `createReview` saga. The review is sent to the server and the UI is updated optimistically.
+
+  * The saga reacts to the `SUBMIT REVIEW REQUESTED` action and sends the data to the server.
+  * The UI is updated on `SUBMIT_REVIEW_REQUESTED`.
+  * In case of error the review is removed from the UI.
+  * BONUS: In case of error the review text is written back to the input field.
+
+#### Steps
 
 Create the `submitMovieReview` saga. Inject axios.post.
 If you have not already done so in the component, extend the payload with
