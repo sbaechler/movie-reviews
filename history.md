@@ -530,3 +530,28 @@ Create the `SUBMIT_REVIEW_SUCCESS` reducer. You could replace the placeholder en
 real entry that got sent back from the server, but don't have to.
 
 Create the `SUBMIT_REVIEW_ERROR` reducer. Remove the placeholder entry.
+
+## Redux-Saga-Tests
+
+#### Tasks
+
+Test the movies sagas using Redux-Saga-Test-Plan. Use the `expectSaga` method.
+
+#### Steps
+
+Install the library:
+
+    yarn add redux-saga-test-plan
+
+Create a `describe` block for each of your movie sagas in movie-sagas.spec.js.
+Inside each block, create a test stub (`it`) for a successful and a failed
+method call.
+
+Create a mock for the Axios methods in the `beforeEach` method.
+
+For each test, define a `mockReturnValue`
+that returns a Promise that resolves to something useful. E.g. the string 'OK'
+or reject the Promise with an Error instance.
+
+Write the rest of the tests. Have a look at the example in the
+[manual](http://redux-saga-test-plan.jeremyfairbank.com/integration-testing/).
