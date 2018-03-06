@@ -329,6 +329,15 @@ Advanced: Try to test a connected component.
 
 ## Immutable.js
 
+#### Tasks
+
+* Replace the reducers with Immutable.Collections. Adjust the selectors.
+* Use a `Record` for `MovieInfo` objects.
+* Create the `toJS` HOC and place it between the container and view components.
+* Adjust the tests to work with Immutable objects.
+
+#### Steps
+
 Install Immutable.js, Redux-Immutable and the Jest matchers:
 
     yarn add immutable redux-immutable jest-immutable-matchers
