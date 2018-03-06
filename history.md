@@ -54,22 +54,60 @@ Read the [Readme](create-react-app-readme.md) and follow the instructions up to
 
 ## First Component
 
-Create the MovieList component.
+#### Task
+
+Display a list of movies in a grid. It should look like this:
+
+![Movie List Mockup](./public/list-view.svg)
+
+#### Steps
 
 Download the `movies/GET.json` mock data from [Github](https://github.com/sbaechler/movie-mock-data/blob/master/data/movies/GET.json)
-and copy it into the `__fixtures__` folder.
+and copy it into the `__fixtures__` folder. Rename it to movies.json.
 
-Create the MovieListItem component.
+For today's excercises we import the required data directly from the JSON file. Have a look
+at the JSON file, it represents the response from the API server that we are going to use on
+day 2.
+
+The server data contains a list of movies. Each movie has a poster image. The URL however is
+not complete. It contains a common prefix that we have to define in the constants.
+
+Create the file `config/constants.js` with the following content:
+
+    export const POSTER_BASE_URL='https://image.tmdb.org/t/p/';
+
+    export const POSTER_SIZES = {
+      92: 'w92',
+      342: 'w342',
+      500: 'w500',
+      780: '780',
+      'original': 'original',
+    };
+
+Import the data in App.js like this:
+
+    import mockData from '../../__fixtures__/movies.json';
+
+    const movies = mockData.results;
+
+Create the `MovieList` component. It should render a list of `MovieListItems` in a grid.
+
+Create the `MovieListItem` component. It should take a single prop `movie` and display it.
+The URL for the image src attribute can be build with the following template string:
+
+    `${POSTER_BASE_URL}/${POSTER_SIZES["342"]}/${movie.poster_path}`;
+
+For the protype styling we use the [Foundation](https://foundation.zurb.com/sites/) framework.
 
 Install Foundation
 
     yarn add foundation-sites
 
-Download the foundation settings file from
+Download the foundation settings file from this page. Click on 'Download Settings File'.
 [Zurb](https://foundation.zurb.com/sites/docs/sass.html#compiling-manually)
-and copy it into the styles folder.
+Copy the file into the styles folder.
 
-Remove the existing css files and create a new index.scss and \_app.scss file.
+Remove the existing css files and create a new `index.scss` and `_app.scss` file.
 Add the following to the index.scss file:
 
     @import './settings';
@@ -83,7 +121,7 @@ Install the sass loader
 
     yarn add sass-loader node-sass
 
-Open the webpack.config.dev and remove the configuration for pcss.
+Open webpack.config.dev (in the config folder) and remove the configuration section for pcss.
 Update it with the following configuration:
 
     {
@@ -117,6 +155,27 @@ movie grid. The item needs the class `cell`.
 
 ### 1.1 Add the Redux state
 
+#### Task
+
+* Add a redux state
+* Fill the redux state using an action.
+
+Use this structure for the `movies` state:
+
+    user: object
+      username: string
+    movies: object
+      overviews: object<id, movie>
+      displayList: Array<id>
+      activeMovie: <Movie>
+
+* The initial user state already contains a `username` property with your name.
+* The initial movies state is empty. It will be filled with the `MOVIE_DATA_RECEIVED` action.
+* The action is triggered in the `componentDidMount` lifecycle method of the `MovieList` component.
+  The payload is the imported fixture.
+
+#### Steps
+
 Install redux
 
 yarn add redux react-redux
@@ -125,20 +184,20 @@ Create the root reducer - a combination of the usersReducer and the movieReducer
 
 Create the user reducer with its initial state where the username is already filled in.
 
-Create the `user` selector that exports the full user state.
+Create the `username` selector that exports the username property from the user state.
 
 Export the reducer and the selector in index.js.
 
 Create the movies reducer with an initial state that looks like this:
 
     const initialState = {
-      overviews: {},
-      displayList: [],
-      details: {},
-      activeMovie: undefined
+      overviews: {},  // store the list response data as id:value
+      displayList: [],  // store the IDs from the response
+      details: {},  // used for the detail views
+      activeMovie: undefined  // currently shown detail view
     };
 
-Create the movies selector that exports a list of movies in the order of displayList.
+Create the movies selector that returns a list of movies ordered by the ids in displayList.
 
 Add the imports to the root-reducer.
 
@@ -170,8 +229,19 @@ Check the Redux inspector and the React inspector if everyting is working correc
 
 ### 1.2 Add the Detail View and the Router
 
+#### Tasks
+
+* Add React Router
+* Create a detail page for a movie.
+
+* The detail data is provided by the `MOVIE_DETAIL_DATA_RECEIVED` action that takes an id and returns the movie data.
+* The action is called by the `componentDidMount` method of the `MovieDetail` component.
+* Use the id from the URL parameter.
+
+#### Steps
+
 Add the detail data (JSON file) to the `__fixtures__` folder. For this excercise we only provide details for one movie.
-Remember the ID of that movie.
+Remember the ID of that movie. Chose one from [here](https://github.com/sbaechler/movie-mock-data/tree/master/data/movies).
 
 If you haven't yet, install `react-router-dom`.
 
@@ -200,7 +270,8 @@ Update the `App` component:
 Add the `BrowserRouter` and the two routes for `/` and `/movies/:id`. The root path
 maps to the `MovieListContainer`, the detail path maps to the `MovieDetailContainer`.
 
-Add a link to the detail page to the `MovieListEntry` component. Use the `Link` component from `react-router-dom`.
+Add a link to the detail page to the `MovieListEntry` component.
+Use the `Link` component from `react-router-dom`.
 
 Finish the `MovieDetail` component. Add the title and some properties from the data.
 Do not forget the link back to the list view.
@@ -257,6 +328,15 @@ Test your reducers, selectors and actions - Keep in mind that those are just pur
 Advanced: Try to test a connected component.
 
 ## Immutable.js
+
+#### Tasks
+
+* Replace the reducers with Immutable.Collections. Adjust the selectors.
+* Use a `Record` for `MovieInfo` objects.
+* Create the `toJS` HOC and place it between the container and view components.
+* Adjust the tests to work with Immutable objects.
+
+#### Steps
 
 Install Immutable.js, Redux-Immutable and the Jest matchers:
 
@@ -330,6 +410,18 @@ Restart the dev server.
 
 ### Excercise 1
 
+#### Tasks
+
+* Create a Saga to fetch the movie data:
+
+  * Sagas react to the `MOVIES REQUESTED` and `MOVIE DETAILS REQUESTED` actions.
+  * Once the data is loaded, the `MOVIES RECEIVED` and `MOVIE DETAILS RECIEVED` actions are published.
+  * In case of error, the `MOVIE LOAD ERROR` action is triggered.
+  * The reducer reacts to the `RECEIVED` actions and updates the state. (Should already mostly be done).
+  * The base URL for the endpoint is taken from the environment variables.
+
+#### Steps
+
 Install Redux-Saga and Axios
 
     yarn add redux-saga axios
@@ -369,6 +461,16 @@ Test the app. List and detail views should be working.
 
 ### Excercise 2
 
+#### Tasks
+
+* Create a `MovieReviews` component that looks like the one in the image below.
+* The component shows a list of reviews and contains an input field where the user can submit his own reviews.
+* The `SUBMIT REVIEW REQUESTED` is sent with the review text, the movie id and the username.
+
+![Reviews Screen](./public/rewiews-view.svg)
+
+#### Steps
+
 Create the `MovieReviews` component. Use the
 [Foundation helper classes](https://foundation.zurb.com/sites/docs/kitchen-sink.html) for easy formatting.
 
@@ -395,6 +497,17 @@ Check with the Redux-Devtools if the `SUBMIT_REVIEW_REQUESTED` action is sent ou
 
 ### Excercise 3
 
+#### Tasks
+
+* Create the `createReview` saga. The review is sent to the server and the UI is updated optimistically.
+
+  * The saga reacts to the `SUBMIT REVIEW REQUESTED` action and sends the data to the server.
+  * The UI is updated on `SUBMIT_REVIEW_REQUESTED`.
+  * In case of error the review is removed from the UI.
+  * BONUS: In case of error the review text is written back to the input field.
+
+#### Steps
+
 Create the `submitMovieReview` saga. Inject axios.post.
 If you have not already done so in the component, extend the payload with
 the `publication_date` property that contains the current date as ISO string.
@@ -417,3 +530,28 @@ Create the `SUBMIT_REVIEW_SUCCESS` reducer. You could replace the placeholder en
 real entry that got sent back from the server, but don't have to.
 
 Create the `SUBMIT_REVIEW_ERROR` reducer. Remove the placeholder entry.
+
+## Redux-Saga-Tests
+
+#### Tasks
+
+Test the movies sagas using Redux-Saga-Test-Plan. Use the `expectSaga` method.
+
+#### Steps
+
+Install the library:
+
+    yarn add redux-saga-test-plan
+
+Create a `describe` block for each of your movie sagas in movie-sagas.spec.js.
+Inside each block, create a test stub (`it`) for a successful and a failed
+method call.
+
+Create a mock for the Axios methods in the `beforeEach` method.
+
+For each test, define a `mockReturnValue`
+that returns a Promise that resolves to something useful. E.g. the string 'OK'
+or reject the Promise with an Error instance.
+
+Write the rest of the tests. Have a look at the example in the
+[manual](http://redux-saga-test-plan.jeremyfairbank.com/integration-testing/).

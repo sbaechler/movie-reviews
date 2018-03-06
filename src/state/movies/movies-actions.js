@@ -20,10 +20,10 @@ export const movieDetailDataReceived = (id, movie) => ({
 });
 
 export const MOVIE_LOAD_ERROR = "MOVIE LOAD ERROR";
-export const movieLoadError = (error, payload) => ({
+export const movieLoadError = (error, payload = {}) => ({
   type: MOVIE_LOAD_ERROR,
-  payload,
-  error
+  error,
+  payload
 });
 
 export const SUBMIT_REVIEW_REQUESTED = "SUBMIT REVIEW REQUESTED";

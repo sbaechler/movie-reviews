@@ -5,12 +5,12 @@ import { createStore } from "redux";
 import rootReducer from "../state/root-reducer";
 import { BrowserRouter } from "react-router-dom";
 
-export const mountWithProvider = (component, state) => {
+export const mountWithProvider = (Component, state) => {
   const store = createStore(rootReducer, state);
 
   return mount(
     <Provider store={store}>
-      <BrowserRouter>{component}</BrowserRouter>
+      <BrowserRouter>{Component}</BrowserRouter>
     </Provider>
   );
 };

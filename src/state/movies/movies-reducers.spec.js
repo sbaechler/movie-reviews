@@ -39,11 +39,11 @@ describe("Movies Reducers", () => {
   });
 
   it("dispatches " + actions.MOVIE_DETAIL_DATA_RECEIVED, () => {
-    let action = {
+    const action = {
       type: actions.MOVIE_DETAIL_DATA_RECEIVED,
       payload: { movie: { info: { id: 1 }, reviews: [] }, id: 1 }
     };
-    let expected = initialState.setIn(
+    const expected = initialState.setIn(
       ["details", 1],
       new Map({
         info: new MovieInfo({ id: 1 }),
