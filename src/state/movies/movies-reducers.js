@@ -13,7 +13,7 @@ export default function moviesReducer(state = initialState, action = {}) {
   const payload = action.payload;
 
   switch (action.type) {
-    case actions.MOVIE_DATA_RECEIVED:
+    case actions.MOVIE_DATA_RECEIVED: {
       // convert the movie Array to a Immutable List
       const movies = fromJS(payload.movies)
         // Create Movie Record instances from the payload.
@@ -27,7 +27,7 @@ export default function moviesReducer(state = initialState, action = {}) {
       const displayList = movies.map(movie => movie.id);
 
       return state.set("overviews", overviews).set("displayList", displayList);
-
+    }
     case actions.MOVIE_DETAIL_DATA_RECEIVED:
       const movieInfo = new MovieInfo(fromJS(payload.movie.info));
       return state.setIn(

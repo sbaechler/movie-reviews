@@ -1,10 +1,9 @@
-import React from "react";
 import * as actions from "./movies-actions";
 
-describe("Movies Actions", () => {
-  let movies = [{ id: 1 }];
+describe("Movies Action Creators", () => {
+  const movies = [{ id: 1 }];
   it("function movieDataReceived works properly", () => {
-    let expected = {
+    const expected = {
       type: actions.MOVIE_DATA_RECEIVED,
       payload: { movies: movies }
     };
@@ -12,7 +11,7 @@ describe("Movies Actions", () => {
   });
 
   it("function movieDetailDataReceived works properly", () => {
-    let expected = {
+    const expected = {
       type: actions.MOVIE_DETAIL_DATA_RECEIVED,
       payload: { movie: {}, id: 1 }
     };

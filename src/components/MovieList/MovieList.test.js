@@ -2,10 +2,10 @@ import React from "react";
 import { List } from "immutable";
 import { shallow, mount } from "enzyme";
 import movieData from "../../__fixtures__/movies";
-import { MovieListComponent } from "./MovieList";
-import MovieListEntry from "./MovieListEntry";
+import MovieList, { MovieListComponent } from "./MovieList";
+import MovieListItem from "./MovieListItem";
 import { moviesActions } from "../../state/movies/index";
-import ConnectedMovieListContainer, {
+import MovieListContainer, {
   MovieListContainerComponent
 } from "./MovieListContainer";
 import { mountWithProvider } from "../../utils/mountWithProvider";
@@ -80,18 +80,18 @@ describe("MovieList", () => {
       }
     ];
     const wrapper = shallow(<MovieListComponent movies={movies} />);
-    expect(wrapper.find(MovieListEntry)).toHaveLength(2);
+    expect(wrapper.find(MovieListItem)).toHaveLength(2);
   });
 });
 
-describe("MovieListEntry", () => {
+describe("MovieListItem", () => {
   it("renders the title correctly", () => {
     const movieTitle = "Test Movie";
     const movie = {
       title: movieTitle,
       poster_path: ""
     };
-    const wrapper = shallow(<MovieListEntry movie={movie} />);
+    const wrapper = shallow(<MovieListItem movie={movie} />);
     expect(wrapper.find('[data-test-id="title-text"]').text()).toEqual(
       movieTitle
     );
@@ -102,7 +102,7 @@ describe("MovieListContainerComponent", () => {
   it("renders correctly with Store", () => {
     const action = moviesActions.movieDataReceived(movieData.results);
     const state = rootReducer(undefined, action);
-    const wrapper = mountWithProvider(<ConnectedMovieListContainer />, state);
-    expect(wrapper.find(MovieListEntry)).toHaveLength(20);
+    const wrapper = mountWithProvider(<MovieListContainer />, state);
+    expect(wrapper.find(MovieListItem)).toHaveLength(20);
   });
 });
