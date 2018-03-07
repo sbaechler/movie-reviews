@@ -20,7 +20,7 @@
 ## Presentation
 
 * Day 1: [Deutsch](https://collab.ti8m.ch/docs/DOC-40432)
-* Day 2: [Deutsch]()
+* Day 2: [Deutsch](https://collab.ti8m.ch/docs/DOC-40512)
 
 ## Code Repos
 
