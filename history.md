@@ -1,5 +1,7 @@
 # React Course
 
+The current version of this file is [on Github](https://github.com/sbaechler/movie-reviews/blob/master/history.md)
+
 ## Hello World
 
 Install create-react-app if you didn't already
@@ -49,8 +51,7 @@ Some of the folders are staying empty for the moment but we're going to use them
 
 Do the refactoring needed to make the app work again.
 
-Read the [Readme](create-react-app-readme.md) and follow the instructions up to
-(not including) adding Bootstrap.
+Read the [Create-React-App-Readme](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md) and follow the instructions up to (not including) adding Bootstrap.
 
 ## First Component
 
@@ -553,5 +554,4 @@ For each test, define a `mockReturnValue`
 that returns a Promise that resolves to something useful. E.g. the string 'OK'
 or reject the Promise with an Error instance.
 
-Write the rest of the tests. Have a look at the example in the
-[manual](http://redux-saga-test-plan.jeremyfairbank.com/integration-testing/).
+Write the rest of the tests. Have a look at the example in the [manual](http://redux-saga-test-plan.jeremyfairbank.com/integration-testing/).
