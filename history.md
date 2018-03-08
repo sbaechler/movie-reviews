@@ -430,7 +430,7 @@ Create the missing actions and action creators `MOVIES_REQUESTED`,
 `MOVIE_DETAILS_REQUESTED` and `MOVIE_LOAD_ERROR`.
 
 Add the constant `BACKEND_URL` to constants.js. Assign it the
-`BACKEND_URL` environment variable.
+`REACT_APP_BACKEND_URL` environment variable.
 
 Add the saga middleware and root saga as described in the
 [Redux Saga Tutorial](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)

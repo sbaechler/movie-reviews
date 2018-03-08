@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
 import { BACKEND_URL } from "../../config/constants";
 import * as actions from "./movies-actions";
 
@@ -8,7 +7,7 @@ export function* loadMovies(get) {
     const movies = yield call(get, `${BACKEND_URL}/movies`);
     yield put(actions.movieDataReceived(movies.data));
   } catch (error) {
-    yield put(actions.movieLoadError, error);
+    yield put(actions.movieLoadError(error));
   }
 }
 
@@ -18,7 +17,7 @@ export function* loadMovieDetails(get, action) {
     const movie = yield call(get, `${BACKEND_URL}/movies/${id}`);
     yield put(actions.movieDetailDataReceived(id, movie.data));
   } catch (error) {
-    yield put(actions.movieLoadError, error, { id });
+    yield put(actions.movieLoadError(error, { id }));
   }
 }
 
@@ -37,7 +36,7 @@ export function* submitMovieReview(post, action) {
   }
 }
 
-export default function* moviesSaga() {
+export default function* moviesSaga(axios) {
   yield takeLatest(actions.MOVIES_REQUESTED, loadMovies, axios.get);
   yield takeLatest(
     actions.MOVIE_DETAILS_REQUESTED,
