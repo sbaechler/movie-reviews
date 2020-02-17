@@ -1,8 +1,6 @@
-import { Map } from "immutable";
-
-const initalState = Map({
+const initalState = {
   username: "Simon"
-});
+};
 
 export default function() {
   return initalState;

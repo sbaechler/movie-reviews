@@ -1,6 +1,5 @@
 import React from "react";
 import MovieListItem from "./MovieListItem";
-import { toJS } from "../toJS";
 
 export function renderMovies(movies) {
   return movies.map(movie => (
@@ -25,4 +24,4 @@ export function MovieListComponent(props) {
   );
 }
 
-export default toJS(MovieListComponent);
+export default MovieListComponent;

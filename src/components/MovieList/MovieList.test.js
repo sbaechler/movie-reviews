@@ -1,5 +1,4 @@
 import React from "react";
-import { List } from "immutable";
 import { shallow, mount } from "enzyme";
 import movieData from "../../__fixtures__/movies";
 import MovieList, { MovieListComponent } from "./MovieList";
@@ -17,7 +16,7 @@ describe("MovieListContainerComponent", () => {
     const wrapper = mount(
       <MovieListContainerComponent
         moviesRequested={moviesRequested}
-        movies={List()}
+        movies={[]}
       />
     );
     expect(wrapper.find(MovieListComponent).exists()).toBe(true);

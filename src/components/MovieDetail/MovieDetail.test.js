@@ -50,7 +50,7 @@ describe("MovieDetail Component", () => {
     expect(wrapper.find(".genre .label")).toHaveLength(2);
   });
 
-  it("renders the passed tagline");
+  it.todo("renders the passed tagline");
 
-  it("renders image correctly");
+  it.todo("renders image correctly");
 });

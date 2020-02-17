@@ -4,13 +4,13 @@ import rootReducer from "./root-reducer";
 import rootSaga from "./root-saga";
 
 const sagaMiddleware = createSagaMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
   rootReducer,
-  compose(
+  composeEnhancers(
     applyMiddleware(sagaMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  ),
 );
 
 sagaMiddleware.run(rootSaga);

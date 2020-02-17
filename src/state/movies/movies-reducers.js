@@ -1,63 +1,73 @@
-import { fromJS, Map } from "immutable";
 import * as actions from "./movies-actions";
 import { MovieInfo } from "./movies-models";
+import {produce} from "immer";
 
-export const initialState = fromJS({
+export const initialState = {
   overviews: {},
   displayList: [],
   details: {},
   activeMovie: undefined
-});
+};
 
-export default function moviesReducer(state = initialState, action = {}) {
-  const payload = action.payload;
-
-  switch (action.type) {
+export default function moviesReducer(state = initialState, { payload, type } = {}) {
+  switch (type) {
     case actions.MOVIE_DATA_RECEIVED: {
       // convert the movie Array to a Immutable List
-      const movies = fromJS(payload.movies)
-        // Create Movie Record instances from the payload.
-        .map(movie => new MovieInfo(movie));
+      const movies = payload.movies
 
       // Create the id mapped object
       const overviews = movies.reduce((acc, movie) => {
-        return acc.set(movie.id, movie);
-      }, Map());
+        acc[movie.id] = movie;
+
+        return acc;
+      }, {});
 
       const displayList = movies.map(movie => movie.id);
 
-      return state.set("overviews", overviews).set("displayList", displayList);
+      return {
+        ...state,
+        overviews,
+        displayList,
+      };
     }
-    case actions.MOVIE_DETAIL_DATA_RECEIVED:
-      const movieInfo = new MovieInfo(fromJS(payload.movie.info));
-      return state.setIn(
-        ["details", payload.id],
-        fromJS({
-          info: movieInfo,
-          reviews: payload.movie.reviews
-        })
-      );
+
+    case actions.MOVIE_DETAIL_DATA_RECEIVED: {
+      const movieInfo = new MovieInfo(payload.movie.info);
+
+      return {
+        ...state,
+        details: {
+          [payload.id]: {
+            info: movieInfo,
+            reviews: payload.movie.reviews,
+          }
+        }
+      };
+    }
+
 
     case actions.SUBMIT_REVIEW_REQUESTED:
-      return state.updateIn(["details", payload.movieId, "reviews"], reviews =>
-        reviews.push(fromJS({ ...payload, id: payload.placeholderId }))
-      );
+      return produce(state, (draft) => {
+        draft.details[payload.movieId].reviews.push({
+          ...payload, id: payload.placeholderId,
+        })
+      })
 
     case actions.SUBMIT_REVIEW_SUCCESS: {
       const review = payload.review;
 
-      return state.updateIn(["details", review.movieId, "reviews"], reviews =>
-        reviews
-          .filter(r => r.get("id") !== payload.placeholderId)
-          .push(fromJS(review))
-      );
+      return produce(state, (draft) => {
+        draft.details[review.movieId].reviews = draft.details[review.movieId].reviews
+          .filter(r => r.id !== payload.placeholderId)
+          .push(review)
+      });
     }
 
     case actions.SUBMIT_REVIEW_ERROR: {
-      return state.updateIn(
-        ["details", payload.review.movieId, "reviews"],
-        reviews => reviews.filter(r => r.get("id") !== payload.placeholderId)
-      );
+      return produce(state, (draft) => {
+        draft.details[payload.review.movieId].reviews = draft.details[payload.review.movieId].reviews
+          .filter(r => r.get("id") !== payload.placeholderId)
+      })
     }
 
     default:

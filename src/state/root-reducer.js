@@ -1,4 +1,4 @@
-import { combineReducers } from "redux-immutable";
+import {combineReducers} from "redux";
 import { usersReducer } from "./user";
 import { movieReducer } from "./movies";
 
